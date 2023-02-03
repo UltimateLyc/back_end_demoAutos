@@ -18,4 +18,7 @@ const app = express() // Indica a la aplicacion que usaremos JS
 app.use(express.urlencoded({extended: false})) // Sirve para que pueda recibir datos y su forma de encriptacion
 app.use(express.json())
 
+/* Llamado a los endpoints */
+app.use('/api/demo_autos', require('./routes/autosRoutes'))
+
 app.listen(port, ()=> console.log(`Server started on port ${port}`)) // Decimos que escucha el puerto indicado

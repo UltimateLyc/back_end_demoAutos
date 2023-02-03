@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config() // mandamos llamar a dotenv y usamos p
 
 /* importacion de funciones */
 const connectDB = require('./config/db')
-
+const errorHandler = require('./middleware/errorMiddleware')
 
 /* conexion del puerto */
 const port = process.env.PORT 
@@ -22,4 +22,8 @@ app.use(express.json())
 /* Llamado a los endpoints */
 app.use('/api/demo_autos', require('./routes/autosRoutes'))
 
+/* Uso de middleware */
+app.use(errorHandler)
+
+/* Conexion al puerto asignado */
 app.listen(port, ()=> console.log(`Server started on port ${port}`)) // Decimos que escucha el puerto indicado

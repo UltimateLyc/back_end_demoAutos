@@ -3,6 +3,13 @@ const mongoose = require('mongoose')
 
 /* Schemas */ 
 const  autoSchema = mongoose.Schema({
+    // Ligamos como Foreign Key al usuario
+    user: {
+        type: mongoose.Schema.Types.ObjectId, // De esta manera ligamos los usuarios a nuestro modelo de tareas
+        required: true,
+        ref: 'User' // referenciamos el documento
+    },
+    // Continuamos con el esquema
     brand: {
         type: String,
         required: [true, ' Favor de ingresar la marca']

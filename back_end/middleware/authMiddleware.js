@@ -24,7 +24,7 @@ const protect = asyncHandler(async(req, res, next) => {
 
             // Obtenemos los datos del usuario del mismo token
             req.user = await User.findById(decoded.id).select('-password') // -password => lo usamos para que no nos muestre esta informacion
-            console.log('user: ', await User.findById(decoded.id).select('-password'))
+            // console.log('user: ', await User.findById(decoded.id).select('-password'))
 
             next()
 

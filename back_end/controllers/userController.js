@@ -34,7 +34,7 @@ const resgistarUser = asyncHandler(async(req, res) => {
 
     // Hasheo del password
     const salt = await bcrypt.genSalt(10) // El parametro 10 es las veces que se ejecutara
-    // console.log("salt:", salt)
+    // console.log("salt:", salt) // test
     const hashedPassword = await bcrypt.hash(password,salt) // Combina el password con el salt para hashear el password
 
     // Creacion del usuario
@@ -87,7 +87,15 @@ const loginUser = asyncHandler(async(req, res) => {
 
 // Funcion para mostrar datos 
 const dataUser = asyncHandler(async(req, res) => {
-    res.status(200).json({message:'Data usuario'})
+
+    const {_id, name, email} = req.user // Desestructuracion
+
+    res.status(200).json({
+        id: _id,
+        name,
+        email,
+        message: 'Datos del usuario'
+    })
 })
 
 module.exports = {

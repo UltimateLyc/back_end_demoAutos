@@ -21,6 +21,7 @@ app.use(express.json())
 
 /* Llamado a los endpoints */
 app.use('/api/demo_autos', require('./routes/autosRoutes'))
+app.use('/api/user', require('./routes/userRoutes'))
 
 /* Uso de middleware */
 app.use(errorHandler)

@@ -26,7 +26,7 @@ const resgistarUser = asyncHandler(async(req, res) => {
 
     // Validacion di un correo ya existe
     const userExist = await User.findOne({email})
-    console.log("userExist:", userExist) //Test
+    // console.log("userExist:", userExist) //Test
     if(userExist){
         res.status(400)
         throw new Error ('Este correo ya esta registrado')
@@ -34,7 +34,7 @@ const resgistarUser = asyncHandler(async(req, res) => {
 
     // Hasheo del password
     const salt = await bcrypt.genSalt(10) // El parametro 10 es las veces que se ejecutara
-    console.log("salt:", salt)
+    // console.log("salt:", salt)
     const hashedPassword = await bcrypt.hash(password,salt) // Combina el password con el salt para hashear el password
 
     // Creacion del usuario
@@ -62,7 +62,27 @@ const resgistarUser = asyncHandler(async(req, res) => {
 
 // Funcion para logear usuario
 const loginUser = asyncHandler(async(req, res) => {
-    res.status(200).json({message:'Se logeo usuario'})
+
+    const {email, password} = req.body // Desestructuracion para no usar (req.body.email || req.body.password)
+
+    //Validacion de que los datos sean bien ingresados
+    const user = await User.findOne({email})
+    // console.log("user: ", user) // test
+
+    if(user && (await bcrypt.compare(password,user.password))) { // Validamos el password con el password generado con hash gracias a compare
+        res.json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            token: generateToken(user._id),
+            message:'Usuario validado'
+        })
+    } else {
+        res.status(400)
+        throw new Error ('Credenciales incorrectas ')
+    }
+
+    // test // res.status(200).json({message:'Se logeo usuario'})
 })
 
 // Funcion para mostrar datos 
